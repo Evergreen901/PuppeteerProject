@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
 const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha');
 const titleOption = ['Ms.', 'Mrs.', 'Mr.', 'Dr.', 'Rev.'];
 let randomstring = require("randomstring");
