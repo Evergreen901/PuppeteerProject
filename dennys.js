@@ -32,7 +32,6 @@ let signUpDennys = async function(page, catchall) {
   do {
     await page.evaluate( () => document.getElementById("SearchText").value = "");
     await page.type('#SearchText', randomstring.generate({ length: 3, charset: 'numeric' }));
-    await page.focus('#SearchText');
     await page.click('#location_search_go');
     await page.waitFor(2000);
 

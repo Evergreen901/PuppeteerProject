@@ -10,6 +10,17 @@ const signUpCheckersRally = require('./checkersrally.js');
 const signUpPanera = require('./panera.js');
 const signUpIHop = require('./ihop.js')
 
+let siteParam;
+let catchallParam;
+
+process.argv.forEach((val, index) => {
+  if (index == 2) {
+    siteParam = val;
+  }
+  else if (index == 3) {
+    catchallParam = val;
+  }
+})
 
 // Re-CAPTCHA configuration
 puppeteer.use(
@@ -23,19 +34,39 @@ puppeteer.use(
 );
 
 (async () => {
+  if (siteParam == undefined || catchallParam == undefined) {
+    console.log('Parameter error.');
+    return;
+  }
   // Makes the browser to be launched in a headful way
   const browser = await puppeteer.launch({ headless : false });
   const page = await browser.newPage();
   
-  //signUpDennys(page, "@test.com");
-  //signUpCinnabon(page, "@test.com");
-  //signUpFHS(page, "@test.com");
-  //signUpKrispy(page, "@test.com");
-  //signUpDotCrazy(page, "@test.com");
-  //signUpCheckersRally(page, "@test.com");
-  //signUpPanera(page, "@test.com");
-  signUpIHop(page, '@test.com');
-
+  if (siteParam == 'dennys') {
+    signUpDennys(page, catchallParam);
+  }
+  else if (siteParam == 'cinnabon') {
+    signUpCinnabon(page, catchallParam);
+  }
+  else if (siteParam == 'fhs') {
+    signUpFHS(page, catchallParam);
+  }
+  else if (siteParam == 'krispy') {
+    signUpKrispy(page, catchallParam);
+  }
+  else if (siteParam == 'dotcrazy') {
+    signUpDotCrazy(page, catchallParam);
+  }
+  else if (siteParam == 'checkers') {
+    signUpCheckersRally(page, catchallParam);
+  }
+  else if (siteParam == 'panera') {
+    signUpPanera(page, catchallParam);
+  }
+  else if (siteParam == 'ihop') {
+    signUpIHop(page, '@test.com');
+  }
+  
   await page.waitFor(300000);
   await browser.close();
 })();
