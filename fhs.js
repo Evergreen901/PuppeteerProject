@@ -34,25 +34,9 @@ let signUpFHS = async function(page, catchall) {
   await page.waitFor(1000);
 
   // 1-2) try to re-CAPTCHA
-  while (true) {
-    let needToReCaptcha = await page.evaluate(() => {
-        return $("#rc-imageselect") != undefined;
-    });
-    if (!needToReCaptcha) {
-        break;
-    }
-    console.log("Try to re-captcha");
-    await page.solveRecaptchas();
-    console.log("re-Captcha finished");
-
-    // wait for 5 seconds
-    await new Promise((res, rej)=> {
-        let timerID = setInterval(()=>{
-            res();
-            clearInterval(timerID);
-        }, 5000)
-    });
-  }
+  console.log("Try to re-captcha");
+  await page.solveRecaptchas();
+  console.log("re-Captcha finished");
 }
 
 module.exports = signUpFHS;

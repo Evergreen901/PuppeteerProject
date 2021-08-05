@@ -23,7 +23,9 @@ puppeteer.use(
   const page = await browser.newPage();
   
   //signUpDennys(page, "@test.com");
-  signUpCinnabon(page, "@test.com");  
+  //signUpCinnabon(page, "@test.com");
+  signUpFHS(page, "@test.com");
+  //signUpKrispy(page, "@test.com");
 
   await page.waitFor(300000);
   await browser.close();
