@@ -6,6 +6,7 @@ const signUpDennys = require('./dennys.js');
 const signUpFHS = require('./fhs.js');
 const signUpKrispy = require('./krispy.js');
 const signUpDotCrazy = require('./dotcrazy.js');
+const signUpCheckersRally = require('./checkersrally.js');
 
 
 // Re-CAPTCHA configuration
@@ -25,10 +26,11 @@ puppeteer.use(
   const page = await browser.newPage();
   
   //signUpDennys(page, "@test.com");
-  signUpCinnabon(page, "@test.com");
+  //signUpCinnabon(page, "@test.com");
   //signUpFHS(page, "@test.com");
   //signUpKrispy(page, "@test.com");
   //signUpDotCrazy(page, "@test.com");
+  signUpCheckersRally(page, "@test.com");
 
   await page.waitFor(300000);
   await browser.close();
