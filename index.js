@@ -8,6 +8,7 @@ const signUpKrispy = require('./krispy.js');
 const signUpDotCrazy = require('./dotcrazy.js');
 const signUpCheckersRally = require('./checkersrally.js');
 const signUpPanera = require('./panera.js');
+const signUpIHop = require('./ihop.js')
 
 
 // Re-CAPTCHA configuration
@@ -31,8 +32,9 @@ puppeteer.use(
   //signUpFHS(page, "@test.com");
   //signUpKrispy(page, "@test.com");
   //signUpDotCrazy(page, "@test.com");
-  signUpCheckersRally(page, "@test.com");
-  signUpPanera(page, "@test.com");
+  //signUpCheckersRally(page, "@test.com");
+  //signUpPanera(page, "@test.com");
+  signUpIHop(page, '@test.com');
 
   await page.waitFor(300000);
   await browser.close();

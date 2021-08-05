@@ -22,9 +22,11 @@ let signUpPanera = async function(page, catchall) {
   let today = new Date();
   let month = today.getMonth() + 1;
   let day = today.getDay() + 1;
-  let year = today.getFullYear() - Math.floor(Math.random() * 20) - 21;
 
-  await page.type('#birthday', n(month) + n(day));
+  await page.type('#birthday', n(month));
+  await page.waitFor(500);
+  await page.type('#birthday', n(day));
+  await page.waitFor(1000);
   await page.click('#top > section:nth-child(2) > div > section.animated.pds-background-white.iw-sign-up-form.fadeIn > div > form > fieldset > button');
   await page.waitFor(5000);
 
