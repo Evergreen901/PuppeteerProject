@@ -30,13 +30,35 @@ let signUpFHS = async function(page, catchall) {
   await page.type("select[formcontrolname='day']", n(day));
   await page.type("select[formcontrolname='year']", year.toString());
 
-  await page.click('body > app-root > app-client > div > app-auth > div > app-sign-up > div > div > div.sign-up--left > form > div:nth-child(13) > button');
-  await page.waitFor(1000);
-
+  await page.waitForSelector('body > app-root > app-client > div > app-auth > div > app-sign-up > div > div > div.sign-up--left > form > div:nth-child(13) > button');
+  const signUpBtn = await page.$('body > app-root > app-client > div > app-auth > div > app-sign-up > div > div > div.sign-up--left > form > div:nth-child(13) > button');
+  
   // 1-2) try to re-CAPTCHA
-  console.log("Try to re-captcha");
-  await page.solveRecaptchas();
-  console.log("re-Captcha finished");
+  while (true) {
+    
+    signUpBtn.click();
+    await page.waitFor(1000);
+
+    console.log("Try to re-captcha");
+    const {
+      captchas,
+      filtered,
+      solutions,
+      solved,
+      error
+    } = await page.solveRecaptchas();
+    console.log("re-Captcha finished");
+
+    await page.waitFor(2000);
+
+    if (solved[0].isSolved) break;
+  }
+
+  await page.waitFor(10000);
+  let isSuccess = await page.evaluate(() => {
+    return document.querySelector('body > app-root > app-client > div > app-auth > div > app-sign-up > div > div > div.sign-up--left > form > div:nth-child(13) > button') == undefined;
+  });
+  console.log(isSuccess);
 }
 
 module.exports = signUpFHS;

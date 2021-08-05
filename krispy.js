@@ -6,7 +6,7 @@ function n(n){
 }
 
 let signUpKrispy = async function(page, catchall) {
-    await page.goto('https://www.krispykreme.com/account/create-account');
+  await page.goto('https://www.krispykreme.com/account/create-account');
 
   await page.type('#ctl00_plcMain_txtFirstName', random_name({ first: true }));
   await page.type('#ctl00_plcMain_txtLastName', random_name({ last: true }));
@@ -29,27 +29,28 @@ let signUpKrispy = async function(page, catchall) {
 
   // 1-2) try to re-CAPTCHA
   while (true) {
-    let needToReCaptcha = await page.evaluate(() => {
-        return $("#btnSubmit:disabled").length > 0;
-    });
-    if (!needToReCaptcha) {
-        break;
-    }
     console.log("Try to re-captcha");
-    await page.solveRecaptchas();
+    const {
+      captchas,
+      filtered,
+      solutions,
+      solved,
+      error
+    } = await page.solveRecaptchas();
     console.log("re-Captcha finished");
+    await page.waitFor(3000);
 
-    // wait for 5 seconds
-    await new Promise((res, rej)=> {
-        let timerID = setInterval(()=>{
-            res();
-            clearInterval(timerID);
-        }, 5000)
-    });
+    if (solved[0].isSolved) break;
   }
 
-  await page.waitFor(1000);
   await page.click('#btnSubmit');
+  await page.waitFor(5000);
+
+  //
+  let isSuccess = await page.evaluate(() => {
+    return document.querySelector('#ctl00_divOrderNow') != undefined;
+  });
+  console.log(isSuccess);
 }
 
 module.exports = signUpKrispy;
