@@ -46,6 +46,14 @@ let signUpDennys = async function(page, catchall) {
 
   await page.waitFor(2000);
   await page.click('#rewards_form > footer > button.fancy-light-btn.js-form-submit');
+
+  await page.waitFor(5000);
+
+  //
+  let isSuccess = await page.evaluate(() => {
+    return document.querySelector('#rewards_form > footer > button.fancy-light-btn.js-form-submit') == undefined;
+  });
+  console.log(isSuccess);
 }
 
 module.exports = signUpDennys;

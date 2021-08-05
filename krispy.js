@@ -48,7 +48,7 @@ let signUpKrispy = async function(page, catchall) {
 
   //
   let isSuccess = await page.evaluate(() => {
-    return document.querySelector('#ctl00_divOrderNow') != undefined;
+    return document.querySelector('#btnSubmit') == undefined;
   });
   console.log(isSuccess);
 }

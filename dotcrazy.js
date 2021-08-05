@@ -18,10 +18,18 @@ let signUpDotCrazy = async function(page, catchall) {
 
   await page.type('#birthdayMonthSelect', month.toString());
   await page.type('#birthdayDaySelect', day.toString());
-  await page.type('#birthdayYearSelect', year.toString());
+  await page.type('#birthYearSelect', year.toString());
   
   await page.type('#postcode', randomstring.generate({ length: 5, charset: 'numeric' }));
   await page.click('#send-submit-button');
+
+  await page.waitFor(5000);
+
+  //
+  let isSuccess = await page.evaluate(() => {
+    return document.querySelector('#send-submit-button') == undefined;
+  });
+  console.log(isSuccess);
 }
 
 module.exports = signUpDotCrazy;

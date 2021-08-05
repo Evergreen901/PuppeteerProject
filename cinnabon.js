@@ -66,6 +66,14 @@ let signUpCinnabon = async function(page, catchall) {
   await frame.waitForSelector('.prim-btn');
   const prim_btn = await frame.$('.prim-btn');
   prim_btn.click();
+
+  await page.waitFor(5000);
+
+  //
+  let isSuccess = await frame.evaluate(() => {
+    return document.querySelector('.prim-btn') == undefined;
+  });
+  console.log(isSuccess);
 }
 
 module.exports = signUpCinnabon;
