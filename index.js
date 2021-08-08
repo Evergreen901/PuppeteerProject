@@ -10,6 +10,10 @@ const signUpCheckersRally = require('./checkersrally.js');
 const signUpPanera = require('./panera.js');
 const signUpIHop = require('./ihop.js')
 
+let randomstring = require("randomstring");
+var url = 'mongodb://localhost:27017/AccountBotDB';
+var MongoClient = require('mongodb').MongoClient;
+
 let siteParam;
 let catchallParam;
 
@@ -36,14 +40,73 @@ puppeteer.use(
 (async () => {
   if (siteParam == undefined || catchallParam == undefined) {
     console.log('Parameter error.');
-    return;
+    //return;
   }
+
+  var email = "";
+  // MongoClient.connect(url, function (err, db) {
+  //   console.log(db);
+  //   db.collection('accounts', function (err, collection) {
+  //     do 
+  //     {
+  //       email = randomstring.generate(5) + catchallParam;
+  //       var query = { email: email };
+        
+  //       collection.find(query).toArray(function(err, result) {
+  //         if (err) throw err;
+  //         console.log(result);
+  //       });
+        
+  //       break;
+  //     } while(1);
+      
+  //     collection.insertOne({ email: email }, function(err, res) {
+  //       if (err) throw err;
+  //       console.log(email + " inserted");
+  //     });
+  //   });
+  //   db.close();  
+  // });
+
+
+  const client = new MongoClient("mongodb://localhost:27017");
+  async function run() { 
+
+    const dotenv = require('dotenv');
+    dotenv.config();
+    
+    try {
+      await client.connect();
+      const database = client.db("accountdb");
+      const collection = database.collection("accounts");
+
+      do {
+        email = randomstring.generate(5) + catchallParam;
+        const cursor = collection.find({email: email});
+        
+        let flag = 0;
+        await cursor.forEach(function(item){
+          flag = 1;
+        });
+
+        if (flag == 0) break;
+      } while(1);
+    } catch (error){
+      console.warn("ERROR: " + error);
+      if (errCallback) errCallback(error);
+    } finally {
+      await client.close();
+    }
+  }
+  run().catch(console.dir);
+  
   // Makes the browser to be launched in a headful way
   const browser = await puppeteer.launch({ headless : false });
   const page = await browser.newPage();
-  
+  let isSuccess = false;
+
   if (siteParam == 'dennys') {
-    signUpDennys(page, catchallParam);
+    isSuccess = await signUpDennys(page, email);
   }
   else if (siteParam == 'cinnabon') {
     signUpCinnabon(page, catchallParam);
@@ -67,6 +130,26 @@ puppeteer.use(
     signUpIHop(page, '@test.com');
   }
   
-  await page.waitFor(300000);
+  console.log(isSuccess);
+
+  if (isSuccess) {
+    const client = new MongoClient("mongodb://localhost:27017");
+    async function run() { 
+
+      try {
+        await client.connect();
+        const database = client.db("accountdb");
+        const collection = database.collection("accounts");
+        await collection.insertOne({ email : email });
+      } catch (error){
+        console.warn("ERROR: " + error);
+        if (errCallback) errCallback(error);
+      } finally {
+        await client.close();
+      }
+    }
+    run().catch(console.dir);
+  }
+  
   await browser.close();
 })();
