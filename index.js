@@ -16,13 +16,15 @@ var MongoClient = require('mongodb').MongoClient;
 
 let siteParam;
 let catchallParam;
+let fileNameParam;
 
 process.argv.forEach((val, index) => {
   if (index == 2) {
     siteParam = val;
-  }
-  else if (index == 3) {
+  } else if (index == 3) {
     catchallParam = val;
+  } else if (index == 4) {
+    fileNameParam = val;
   }
 })
 
@@ -44,31 +46,6 @@ puppeteer.use(
   }
 
   var email = "";
-  // MongoClient.connect(url, function (err, db) {
-  //   console.log(db);
-  //   db.collection('accounts', function (err, collection) {
-  //     do 
-  //     {
-  //       email = randomstring.generate(5) + catchallParam;
-  //       var query = { email: email };
-        
-  //       collection.find(query).toArray(function(err, result) {
-  //         if (err) throw err;
-  //         console.log(result);
-  //       });
-        
-  //       break;
-  //     } while(1);
-      
-  //     collection.insertOne({ email: email }, function(err, res) {
-  //       if (err) throw err;
-  //       console.log(email + " inserted");
-  //     });
-  //   });
-  //   db.close();  
-  // });
-
-
   const client = new MongoClient("mongodb://localhost:27017");
   async function run() { 
 
@@ -106,7 +83,7 @@ puppeteer.use(
   let isSuccess = false;
 
   if (siteParam == 'dennys') {
-    isSuccess = await signUpDennys(page, email);
+    isSuccess = await signUpDennys(page, email, fileNameParam);
   }
   else if (siteParam == 'cinnabon') {
     signUpCinnabon(page, catchallParam);
@@ -150,6 +127,6 @@ puppeteer.use(
     }
     run().catch(console.dir);
   }
-  
+
   await browser.close();
 })();

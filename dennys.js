@@ -5,7 +5,7 @@ function n(n){
   return n > 9 ? "" + n: "0" + n;
 }
 
-let signUpDennys = async function(page, email) {
+let signUpDennys = async function(page, email, fileNameParam) {
   await page.goto('https://www.dennys.com/rewards/');
 
   const titleOption = ['Ms.', 'Mrs.', 'Mr.', 'Dr.', 'Rev.'];
@@ -65,7 +65,7 @@ let signUpDennys = async function(page, email) {
     content += '\r\nEmail : ' + email;    
   }
 
-  fs.writeFile(process.env.OUTPUT_FILE_PATH, content, err => {
+  fs.writeFile(process.env.OUTPUT_FILE_PATH + fileNameParam + '.txt', content, err => {
     if (err) {
       console.error(err)
     }
