@@ -29,7 +29,7 @@ let signUpCinnabon = async function(page, catchall, fileNameParam) {
   
   let today = new Date();
   let month = today.getMonth();
-  let day = today.getDate() + 1;
+  let day = today.getDate();
   let year = today.getFullYear() - Math.floor(Math.random() * 20) - 21;
   
   await frame.waitForSelector('#s_birthday');

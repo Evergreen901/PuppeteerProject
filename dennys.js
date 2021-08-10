@@ -13,7 +13,7 @@ let signUpDennys = async function(page, email, fileNameParam) {
 
   let today = new Date();
   let month = today.getMonth() + 1;
-  let day = today.getDate() + 1;
+  let day = today.getDate();
   let year = today.getFullYear() - Math.floor(Math.random() * 20) - 21;
   let zipcode = randomstring.generate({ length: 5, charset: 'numeric' });
   let phone = randomstring.generate({ length: 11, charset: 'numeric' });

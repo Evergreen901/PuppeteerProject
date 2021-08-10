@@ -21,7 +21,7 @@ let signUpPanera = async function(page, catchall) {
 
   let today = new Date();
   let month = today.getMonth() + 1;
-  let day = today.getDate() + 1;
+  let day = today.getDate();
 
   await page.type('#birthday', n(month));
   await page.waitFor(500);

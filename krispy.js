@@ -13,7 +13,7 @@ let signUpKrispy = async function(page, catchall) {
 
   let today = new Date();
   let month = today.getMonth() + 1;
-  let day = today.getDate() + 1;
+  let day = today.getDate();
 
   await page.type('#ctl00_plcMain_ddlBirthdayMM', n(month));
   await page.type('#ctl00_plcMain_ddlBirthdayDD', n(day));

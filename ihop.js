@@ -19,7 +19,7 @@ let signUpIHop = async function(page, catchall) {
 
   let today = new Date();
   let month = today.getMonth();
-  let day = today.getDate() + 1;
+  let day = today.getDate();
   let year = today.getFullYear() - Math.floor(Math.random() * 20) - 21;
   const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
