@@ -40,7 +40,7 @@ let signUpCheckersRally = async function(page, catchall, fileNameParam) {
 
   //
   let isSuccess = await page.evaluate(() => {
-    return document.querySelector('#content-wrapper > div:nth-child(1) > div.container > div.row.reverseEnrollRegistrationFields > div > div > div.panel-body > form > div > div:nth-child(15) > div > button') == undefined;
+    return document.querySelector('#content-wrapper > div:nth-child(1) > div.container > div > div > div > div.panel-body > div > p.continue-to-account-balance') != undefined;
   });
   console.log(isSuccess);
 
@@ -59,6 +59,8 @@ let signUpCheckersRally = async function(page, catchall, fileNameParam) {
       console.error(err)
     }
   })
+
+  return isSuccess;
 }
 
 module.exports = signUpCheckersRally;
