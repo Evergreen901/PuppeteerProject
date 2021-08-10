@@ -50,7 +50,7 @@ let signUpKrispy = async function(page, catchall, fileNameParam) {
 
   //
   let isSuccess = await page.evaluate(() => {
-    return document.querySelector('#btnSubmit') == undefined;
+    return document.querySelector('#ctl00_lnkOrderNowDesktop') != undefined;
   });
   console.log(isSuccess);
 
@@ -60,7 +60,7 @@ let signUpKrispy = async function(page, catchall, fileNameParam) {
     content = 'success';
     content += '\r\nUserName : ' + firstName + ' ' + lastName;
     content += '\r\nEmail : ' + email;
-    content += '\r\nBirthay : ' + n(month) + '/' + n(day) + '/' + year.toString();
+    content += '\r\nBirthay : ' + n(month) + '/' + n(day);
   }
 
   fs.writeFile(process.env.OUTPUT_FILE_PATH + fileNameParam + '.txt', content, err => {
