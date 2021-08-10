@@ -68,6 +68,7 @@ let signUpFHS = async function(page, catchall, fileNameParam) {
     content = 'success';
     content += '\r\nUserName : ' + firstName + ' ' + lastName;
     content += '\r\nEmail : ' + email;
+    content += '\r\nPassword : ' + pwd;
     content += '\r\nBirthay : ' + n(month + 1) + '/' + n(day) + '/' + year.toString();
   }
 

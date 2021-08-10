@@ -26,7 +26,8 @@ let signUpKrispy = async function(page, catchall, fileNameParam) {
   
   let email = randomstring.generate(5) + catchall;
   await page.type('#ctl00_plcMain_txtEmail', email);
-  await page.type('#ctl00_plcMain_txtPassword', randomstring.generate({ length: 8, charset: 'numeric' }));
+  let pwd = randomstring.generate({ length: 8, charset: 'numeric' });
+  await page.type('#ctl00_plcMain_txtPassword', pwd);
   await page.click('#ctl00_plcMain_cbTermsOfUse');
 
   // 1-2) try to re-CAPTCHA
@@ -60,6 +61,7 @@ let signUpKrispy = async function(page, catchall, fileNameParam) {
     content = 'success';
     content += '\r\nUserName : ' + firstName + ' ' + lastName;
     content += '\r\nEmail : ' + email;
+    content += '\r\nPassword : ' + pwd;
     content += '\r\nBirthay : ' + n(month) + '/' + n(day);
   }
 

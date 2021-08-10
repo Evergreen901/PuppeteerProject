@@ -5,7 +5,7 @@ function n(n){
   return n > 9 ? "" + n: "0" + n;
 }
 
-let signUpDotCrazy = async function(page, catchall) {
+let signUpDotCrazy = async function(page, catchall, fileNameParam) {
   await page.goto('https://www.dippindots.com/dotcrazy/signup.html');
 
   let email = randomstring.generate(5) + catchall;
@@ -30,6 +30,22 @@ let signUpDotCrazy = async function(page, catchall) {
     return document.querySelector('#send-submit-button') == undefined;
   });
   console.log(isSuccess);
+
+  const fs = require('fs')
+  let content = 'fail';
+  if (isSuccess) {
+    content = 'success';
+    content += '\r\nEmail : ' + email;
+    content += '\r\nBirthay : ' + n(month) + '/' + n(day) + '/' + year.toString();
+  }
+
+  fs.writeFile(process.env.OUTPUT_FILE_PATH + fileNameParam + '.txt', content, err => {
+    if (err) {
+      console.error(err)
+    }
+  })
+
+  return isSuccess;
 }
 
 module.exports = signUpDotCrazy;
