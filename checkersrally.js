@@ -5,7 +5,7 @@ function n(n){
   return n > 9 ? "" + n: "0" + n;
 }
 
-let signUpCheckersRally = async function(page, catchall) {
+let signUpCheckersRally = async function(page, catchall, fileNameParam) {
   await page.goto('https://checkersrallys.myguestaccount.com/guest/enroll?card-template=gz6U71JdL9Y%3d&template=0');
 
   const titleOption = ['Dr.', 'Mrs.', 'Mr.', 'Ms.', 'Rev.'];
@@ -43,6 +43,22 @@ let signUpCheckersRally = async function(page, catchall) {
     return document.querySelector('#content-wrapper > div:nth-child(1) > div.container > div.row.reverseEnrollRegistrationFields > div > div > div.panel-body > form > div > div:nth-child(15) > div > button') == undefined;
   });
   console.log(isSuccess);
+
+  const fs = require('fs')
+  let content = 'fail';
+  if (isSuccess) {
+    content = 'success';
+    content += '\r\nUserName : ' + firstName + ' ' + lastName;
+    content += '\r\nEmail : ' + email;
+    content += '\r\nPassword : ' + pwd;
+    content += '\r\nBirthay : ' + n(month + 1) + '/' + n(day);
+  }
+
+  fs.writeFile(process.env.OUTPUT_FILE_PATH + fileNameParam + '.txt', content, err => {
+    if (err) {
+      console.error(err)
+    }
+  })
 }
 
 module.exports = signUpCheckersRally;

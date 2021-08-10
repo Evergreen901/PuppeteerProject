@@ -27,7 +27,7 @@ let signUpDotCrazy = async function(page, catchall, fileNameParam) {
 
   //
   let isSuccess = await page.evaluate(() => {
-    return document.querySelector('#send-submit-button') == undefined;
+    return document.querySelector('#maincontent > div > div > div > div > div > div > h1') != undefined;
   });
   console.log(isSuccess);
 
