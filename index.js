@@ -128,6 +128,6 @@ puppeteer.use(
     run().catch(console.dir);
   }
 
-  await page.waitFor(5000000);
+  //await page.waitFor(5000000);
   await browser.close();
 })();

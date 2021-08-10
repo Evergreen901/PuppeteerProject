@@ -10,10 +10,13 @@ let signUpIHop = async function(page, catchall, fileNameParam) {
   await page.click('#section_main > div.myhop-bar > div > a');
 
   let email = randomstring.generate(5) + catchall;
+  let pwd = randomstring.generate(13);
+  let firstName = random_name({ first: true });
+  let lastName = random_name({ last: true });
   await page.type('#email', email);
-  await page.type('#password', randomstring.generate(13));
-  await page.type('#firstName', random_name({ first: true }));
-  await page.type('#lastName', random_name({ last: true }));
+  await page.type('#password', pwd);
+  await page.type('#firstName', firstName);
+  await page.type('#lastName', lastName);
 
   await page.type('#mobileNumber', randomstring.generate({ length: 11, charset: 'numeric' }));
 
@@ -46,7 +49,7 @@ let signUpIHop = async function(page, catchall, fileNameParam) {
   await page.click('#signupButton');  
 
   let isSuccess = await page.evaluate(() => {
-    return document.querySelector('#signupButton') == undefined;
+    return document.querySelector('#section_main > div.myhop-modal.myhop-modal--signup > div > div > div.myhop-success > h2') != undefined;
   });
   console.log(isSuccess);
 
@@ -57,7 +60,7 @@ let signUpIHop = async function(page, catchall, fileNameParam) {
     content += '\r\nUserName : ' + firstName + ' ' + lastName;
     content += '\r\nEmail : ' + email;
     content += '\r\nPassword : ' + pwd;
-    content += '\r\nBirthay : ' + n(month) + '/' + n(day);
+    content += '\r\nBirthay : ' + n(month + 1) + '/' + n(day) + '/' + year.toString();
   }
 
   fs.writeFile(process.env.OUTPUT_FILE_PATH + fileNameParam + '.txt', content, err => {
