@@ -5,7 +5,7 @@ function n(n){
   return n > 9 ? "" + n: "0" + n;
 }
 
-let signUpIHop = async function(page, catchall) {
+let signUpIHop = async function(page, catchall, fileNameParam) {
   await page.goto('https://www.ihop.com/en');
   await page.click('#section_main > div.myhop-bar > div > a');
 
@@ -44,6 +44,29 @@ let signUpIHop = async function(page, catchall) {
 
   await page.click('#section_main > div.myhop-modal.myhop-modal--signup > div > div > div.myhop-signup.language-signup-en > fieldset.myhop-signup__group.myhop-signup__group--terms > div:nth-child(3) > label');
   await page.click('#signupButton');  
+
+  let isSuccess = await page.evaluate(() => {
+    return document.querySelector('#signupButton') == undefined;
+  });
+  console.log(isSuccess);
+
+  const fs = require('fs')
+  let content = 'fail';
+  if (isSuccess) {
+    content = 'success';
+    content += '\r\nUserName : ' + firstName + ' ' + lastName;
+    content += '\r\nEmail : ' + email;
+    content += '\r\nPassword : ' + pwd;
+    content += '\r\nBirthay : ' + n(month) + '/' + n(day);
+  }
+
+  fs.writeFile(process.env.OUTPUT_FILE_PATH + fileNameParam + '.txt', content, err => {
+    if (err) {
+      console.error(err)
+    }
+  })
+
+  return isSuccess;
 }
 
 module.exports = signUpIHop;

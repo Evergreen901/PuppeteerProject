@@ -35,7 +35,7 @@ let signUpPanera = async function(page, catchall, fileNameParam) {
 
   //
   let isSuccess = await page.evaluate(() => {
-    return document.querySelector('#sign-up-confirm > div.pds-overlay-container > div > section > div > h1') != undefined;
+    return document.querySelector('#top > section:nth-child(7) > div > div > a') != undefined;
   });
   console.log(isSuccess);
 
@@ -46,7 +46,7 @@ let signUpPanera = async function(page, catchall, fileNameParam) {
     content += '\r\nUserName : ' + firstName + ' ' + lastName;
     content += '\r\nEmail : ' + email;
     content += '\r\nPassword : ' + pwd;
-    content += '\r\nBirthay : ' + n(month + 1) + '/' + n(day);
+    content += '\r\nBirthay : ' + n(month) + '/' + n(day);
   }
 
   fs.writeFile(process.env.OUTPUT_FILE_PATH + fileNameParam + '.txt', content, err => {

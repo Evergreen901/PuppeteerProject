@@ -51,7 +51,7 @@ let signUpCheckersRally = async function(page, catchall, fileNameParam) {
     content += '\r\nUserName : ' + firstName + ' ' + lastName;
     content += '\r\nEmail : ' + email;
     content += '\r\nPassword : ' + pwd;
-    content += '\r\nBirthay : ' + n(month + 1) + '/' + n(day);
+    content += '\r\nBirthay : ' + n(month) + '/' + n(day);
   }
 
   fs.writeFile(process.env.OUTPUT_FILE_PATH + fileNameParam + '.txt', content, err => {

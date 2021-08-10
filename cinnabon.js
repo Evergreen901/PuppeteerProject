@@ -28,7 +28,7 @@ let signUpCinnabon = async function(page, catchall, fileNameParam) {
   s_lastname.type(lastName);
   
   let today = new Date();
-  let month = today.getMonth();
+  let month = today.getMonth() + 1;
   let day = today.getDate();
   let year = today.getFullYear() - Math.floor(Math.random() * 20) - 21;
   
