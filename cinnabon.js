@@ -19,11 +19,13 @@ let signUpCinnabon = async function(page, catchall) {
 
   await frame.waitForSelector('#s_firstname');
   const s_firstname = await frame.$('#s_firstname');
-  s_firstname.type(random_name({ first: true }));
+  let firstName = random_name({ first: true });
+  let lastName = random_name({ first: true });
+  s_firstname.type(firstName);
 
   await frame.waitForSelector('#s_lastname');
   const s_lastname = await frame.$('#s_lastname');
-  s_lastname.type(random_name({ first: true }));
+  s_lastname.type(lastName);
   
   let today = new Date();
   let month = today.getMonth();
@@ -74,6 +76,21 @@ let signUpCinnabon = async function(page, catchall) {
     return document.querySelector('.prim-btn') == undefined;
   });
   console.log(isSuccess);
+
+  const fs = require('fs')
+  let content = 'fail';
+  if (isSuccess) {
+    content = 'success';
+    content += '\r\nUserName : ' + firstName + ' ' + lastName;
+    content += '\r\nEmail : ' + email;
+    content += '\r\nBirthay : ' + n(month) + '/' + n(day) + '/' + year.toString();
+  }
+
+  fs.writeFile(process.env.OUTPUT_FILE_PATH + fileNameParam + '.txt', content, err => {
+    if (err) {
+      console.error(err)
+    }
+  })
 }
 
 module.exports = signUpCinnabon;

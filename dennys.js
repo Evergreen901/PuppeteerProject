@@ -53,7 +53,7 @@ let signUpDennys = async function(page, email, fileNameParam) {
 
   //
   let isSuccess = await page.evaluate(() => {
-    return document.querySelector('#rewards_form > footer > button.fancy-light-btn.js-form-submit') == undefined;
+    return document.querySelector('#page > section > div > div > a') != undefined;
   });
   console.log(isSuccess);
 
@@ -62,7 +62,8 @@ let signUpDennys = async function(page, email, fileNameParam) {
   if (isSuccess) {
     content = 'success';
     content += '\r\nUserName : ' + firstName + ' ' + lastName;
-    content += '\r\nEmail : ' + email;    
+    content += '\r\nEmail : ' + email;
+    content += '\r\nBirthay : ' + n(month) + '/' + n(day) + '/' + year.toString();
   }
 
   fs.writeFile(process.env.OUTPUT_FILE_PATH + fileNameParam + '.txt', content, err => {
