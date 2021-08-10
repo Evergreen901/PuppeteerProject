@@ -17,17 +17,18 @@ let signUpFHS = async function(page, catchall, fileNameParam) {
   let pwd = randomstring.generate(8);
   await page.type("input[formcontrolname='password']", pwd);
   await page.type("input[formcontrolname='password_confirm']", pwd);
-  await page.type("input[formcontrolname='phone_number']", randomstring.generate({ length: 11, charset: 'numeric' }));
+  await page.type("input[formcontrolname='phone_number']", randomstring.generate({ length: 20, charset: 'numeric' }));
   await page.type("input[formcontrolname='postal_code']", randomstring.generate({ length: 5, charset: 'numeric' }));
 
   let today = new Date();
   let month = today.getMonth();
-  let day = today.getDay() + 1;
+  let day = today.getDate() + 1;
   let year = today.getFullYear() - Math.floor(Math.random() * 20) - 21;
   const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ];
 
+  console.log(day);
   await page.type("select[formcontrolname='month']", monthNames[month]);
   await page.type("select[formcontrolname='day']", n(day));
   await page.type("select[formcontrolname='year']", year.toString());
@@ -58,9 +59,8 @@ let signUpFHS = async function(page, catchall, fileNameParam) {
 
   await page.waitFor(10000);
   let isSuccess = await page.evaluate(() => {
-    return document.querySelector('body > app-root > app-client > div > app-auth > div > app-sign-up > div > div > div.sign-up--left > form > div:nth-child(13) > button') == undefined;
+    return document.querySelector('body > app-root > app-client > div > app-account > div > div > app-account-dashboard > div > div > div.account-dashboard--item.margin-top--30 > div.account-dashboard--item--header.cursor--pointer.flex.flex--al-it-ce.flex--ju-co-sb.padding-left--10.padding-right--10.ng-tns-c6-3.account-dashboard--item--header--expanded.ng-star-inserted > div > span') != undefined;
   });
-  console.log(isSuccess);
 
   const fs = require('fs')
   let content = 'fail';
@@ -76,6 +76,8 @@ let signUpFHS = async function(page, catchall, fileNameParam) {
       console.error(err)
     }
   })
+
+  return isSuccess;
 }
 
 module.exports = signUpFHS;

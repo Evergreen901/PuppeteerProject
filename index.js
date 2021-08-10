@@ -86,25 +86,25 @@ puppeteer.use(
     isSuccess = await signUpDennys(page, email, fileNameParam);
   }
   else if (siteParam == 'cinnabon') {
-    signUpCinnabon(page, catchallParam, fileNameParam);
+    isSuccess = await signUpCinnabon(page, catchallParam, fileNameParam);
   }
   else if (siteParam == 'fhs') {
-    signUpFHS(page, catchallParam, fileNameParam);
+    isSuccess = await signUpFHS(page, catchallParam, fileNameParam);
   }
   else if (siteParam == 'krispy') {
-    signUpKrispy(page, catchallParam, fileNameParam);
+    isSuccess = await signUpKrispy(page, catchallParam, fileNameParam);
   }
   else if (siteParam == 'dotcrazy') {
-    signUpDotCrazy(page, catchallParam, fileNameParam);
+    isSuccess = await signUpDotCrazy(page, catchallParam, fileNameParam);
   }
   else if (siteParam == 'checkers') {
-    signUpCheckersRally(page, catchallParam, fileNameParam);
+    isSuccess = await signUpCheckersRally(page, catchallParam, fileNameParam);
   }
   else if (siteParam == 'panera') {
-    signUpPanera(page, catchallParam, fileNameParam);
+    isSuccess = await signUpPanera(page, catchallParam, fileNameParam);
   }
   else if (siteParam == 'ihop') {
-    signUpIHop(page, catchallParam, fileNameParam);
+    isSuccess = await signUpIHop(page, catchallParam, fileNameParam);
   }
   
   console.log(isSuccess);
@@ -128,6 +128,6 @@ puppeteer.use(
     run().catch(console.dir);
   }
 
-  await page.waitFor(5000000);
+  //await page.waitFor(5000000);
   await browser.close();
 })();

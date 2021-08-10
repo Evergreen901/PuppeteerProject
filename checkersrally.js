@@ -19,7 +19,7 @@ let signUpCheckersRally = async function(page, catchall) {
 
   let today = new Date();
   let month = today.getMonth() + 1;
-  let day = today.getDay() + 1;
+  let day = today.getDate() + 1;
 
   await page.type('#dateOfBirthMonth', month.toString());
   await page.type('#dateOfBirthDay', day.toString());  

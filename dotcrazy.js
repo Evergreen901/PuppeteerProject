@@ -13,7 +13,7 @@ let signUpDotCrazy = async function(page, catchall) {
 
   let today = new Date();
   let month = today.getMonth() + 1;
-  let day = today.getDay() + 1;
+  let day = today.getDate() + 1;
   let year = today.getFullYear() - Math.floor(Math.random() * 20) - 21;
 
   await page.type('#birthdayMonthSelect', month.toString());
