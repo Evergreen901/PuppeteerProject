@@ -5,11 +5,13 @@ function n(n){
   return n > 9 ? "" + n: "0" + n;
 }
 
-let signUpKrispy = async function(page, catchall) {
+let signUpKrispy = async function(page, catchall, fileNameParam) {
   await page.goto('https://www.krispykreme.com/account/create-account');
 
-  await page.type('#ctl00_plcMain_txtFirstName', random_name({ first: true }));
-  await page.type('#ctl00_plcMain_txtLastName', random_name({ last: true }));
+  let firstName = random_name({ first: true });
+  let lastName = random_name({ last: true });
+  await page.type('#ctl00_plcMain_txtFirstName', firstName);
+  await page.type('#ctl00_plcMain_txtLastName', lastName);
 
   let today = new Date();
   let month = today.getMonth() + 1;
@@ -51,6 +53,23 @@ let signUpKrispy = async function(page, catchall) {
     return document.querySelector('#btnSubmit') == undefined;
   });
   console.log(isSuccess);
+
+  const fs = require('fs')
+  let content = 'fail';
+  if (isSuccess) {
+    content = 'success';
+    content += '\r\nUserName : ' + firstName + ' ' + lastName;
+    content += '\r\nEmail : ' + email;
+    content += '\r\nBirthay : ' + n(month) + '/' + n(day) + '/' + year.toString();
+  }
+
+  fs.writeFile(process.env.OUTPUT_FILE_PATH + fileNameParam + '.txt', content, err => {
+    if (err) {
+      console.error(err)
+    }
+  })
+
+  return isSuccess;
 }
 
 module.exports = signUpKrispy;

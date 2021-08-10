@@ -91,6 +91,8 @@ let signUpCinnabon = async function(page, catchall, fileNameParam) {
       console.error(err)
     }
   })
+
+  return isSuccess;
 }
 
 module.exports = signUpCinnabon;
