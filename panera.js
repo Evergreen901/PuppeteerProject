@@ -35,7 +35,7 @@ let signUpPanera = async function(page, catchall, fileNameParam) {
 
   //
   let isSuccess = await page.evaluate(() => {
-    return document.querySelector('#top > section:nth-child(2) > div > section.animated.pds-background-white.iw-sign-up-form.fadeIn > div > form > fieldset > button') == undefined;
+    return document.querySelector('#sign-up-confirm > div.pds-overlay-container > div > section > div > h1') != undefined;
   });
   console.log(isSuccess);
 
