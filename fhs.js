@@ -5,11 +5,13 @@ function n(n){
   return n > 9 ? "" + n: "0" + n;
 }
 
-let signUpFHS = async function(page, catchall) {
+let signUpFHS = async function(page, catchall, fileNameParam) {
   await page.goto('https://account.firehousesubs.com/auth/sign-up');
   
-  await page.type("input[formcontrolname='firstName']", random_name({ first: true }));
-  await page.type("input[formcontrolname='lastName']", random_name({ last: true }));
+  let firstName = random_name({ first: true });
+  let lastName = random_name({ last: true });
+  await page.type("input[formcontrolname='firstName']", firstName);
+  await page.type("input[formcontrolname='lastName']", lastName);
   let email = randomstring.generate(5) + catchall;
   await page.type("input[formcontrolname='email']", email);
   let pwd = randomstring.generate(8);
@@ -59,6 +61,21 @@ let signUpFHS = async function(page, catchall) {
     return document.querySelector('body > app-root > app-client > div > app-auth > div > app-sign-up > div > div > div.sign-up--left > form > div:nth-child(13) > button') == undefined;
   });
   console.log(isSuccess);
+
+  const fs = require('fs')
+  let content = 'fail';
+  if (isSuccess) {
+    content = 'success';
+    content += '\r\nUserName : ' + firstName + ' ' + lastName;
+    content += '\r\nEmail : ' + email;
+    content += '\r\nBirthay : ' + n(month + 1) + '/' + n(day) + '/' + year.toString();
+  }
+
+  fs.writeFile(process.env.OUTPUT_FILE_PATH + fileNameParam + '.txt', content, err => {
+    if (err) {
+      console.error(err)
+    }
+  })
 }
 
 module.exports = signUpFHS;

@@ -5,7 +5,7 @@ function n(n){
   return n > 9 ? "" + n: "0" + n;
 }
 
-let signUpCinnabon = async function(page, catchall) {
+let signUpCinnabon = async function(page, catchall, fileNameParam) {
   await page.goto('https://www.cinnabon.com/join-club-cinnabon');
   
   await page.waitForSelector("iframe");
@@ -73,7 +73,7 @@ let signUpCinnabon = async function(page, catchall) {
 
   //
   let isSuccess = await frame.evaluate(() => {
-    return document.querySelector('.prim-btn') == undefined;
+    return document.querySelector('body > h1') != undefined;
   });
   console.log(isSuccess);
 
