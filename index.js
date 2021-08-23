@@ -82,29 +82,41 @@ puppeteer.use(
   const page = await browser.newPage();
   let isSuccess = false;
 
-  if (siteParam == 'dennys') {
-    isSuccess = await signUpDennys(page, email, fileNameParam);
-  }
-  else if (siteParam == 'cinnabon') {
-    isSuccess = await signUpCinnabon(page, catchallParam, fileNameParam);
-  }
-  else if (siteParam == 'fhs') {
-    isSuccess = await signUpFHS(page, catchallParam, fileNameParam);
-  }
-  else if (siteParam == 'krispy') {
-    isSuccess = await signUpKrispy(page, catchallParam, fileNameParam);
-  }
-  else if (siteParam == 'dotcrazy') {
-    isSuccess = await signUpDotCrazy(page, catchallParam, fileNameParam);
-  }
-  else if (siteParam == 'checkers') {
-    isSuccess = await signUpCheckersRally(page, catchallParam, fileNameParam);
-  }
-  else if (siteParam == 'panera') {
-    isSuccess = await signUpPanera(page, catchallParam, fileNameParam);
-  }
-  else if (siteParam == 'ihop') {
-    isSuccess = await signUpIHop(page, catchallParam, fileNameParam);
+  try
+  {
+    if (siteParam == 'dennys') {
+      isSuccess = await signUpDennys(page, email, fileNameParam);
+    }
+    else if (siteParam == 'cinnabon') {
+      isSuccess = await signUpCinnabon(page, catchallParam, fileNameParam);
+    }
+    else if (siteParam == 'fhs') {
+      isSuccess = await signUpFHS(page, catchallParam, fileNameParam);
+    }
+    else if (siteParam == 'krispy') {
+      isSuccess = await signUpKrispy(page, catchallParam, fileNameParam);
+    }
+    else if (siteParam == 'dotcrazy') {
+      isSuccess = await signUpDotCrazy(page, catchallParam, fileNameParam);
+    }
+    else if (siteParam == 'checkers') {
+      isSuccess = await signUpCheckersRally(page, catchallParam, fileNameParam);
+    }
+    else if (siteParam == 'panera') {
+      isSuccess = await signUpPanera(page, catchallParam, fileNameParam);
+    }
+    else if (siteParam == 'ihop') {
+      isSuccess = await signUpIHop(page, catchallParam, fileNameParam);
+    }
+  } catch (e) {
+    const fs = require('fs')
+    let content = 'fail';
+    
+    fs.writeFile(process.env.OUTPUT_FILE_PATH + fileNameParam + '.txt', content, err => {
+      if (err) {
+        console.error(err)
+      }
+    })
   }
   
   console.log(isSuccess);
