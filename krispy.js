@@ -1,5 +1,6 @@
 let randomstring = require("randomstring");
 let random_name = require('node-random-name');
+const { NoCaptchaTaskProxyless } = require("node-capmonster")
 
 function n(n){
   return n > 9 ? "" + n: "0" + n;
@@ -31,7 +32,7 @@ let signUpKrispy = async function(page, catchall, fileNameParam) {
   await page.click('#ctl00_plcMain_cbTermsOfUse');
 
   // 1-2) try to re-CAPTCHA
-  while (true) {
+  /*while (true) {
     console.log("Try to re-captcha");
     const {
       captchas,
@@ -44,7 +45,18 @@ let signUpKrispy = async function(page, catchall, fileNameParam) {
     await page.waitFor(3000);
 
     if (solved[0].isSolved) break;
-  }
+  }*/
+  const recaptcha = new NoCaptchaTaskProxyless("d72cfbca58f2aa138bfc1a3821f31823")
+  recaptcha.createTask("6Lc4iwIaAAAAAHpijD7fQ_rJIdWZtvpodAsPt8AA", "https://www.krispykreme.com/account/create-account")
+  .then((taskId) => {
+      console.info(taskId);
+      return taskId
+  }).then((taskId) => {
+      return taskId;
+  }).then((taskId) => {
+      recaptcha.joinTaskResult(taskId)
+          .then((response) => {console.info(response)})
+  })
 
   await page.click('#btnSubmit');
   await page.waitFor(5000);
