@@ -46,17 +46,24 @@ let signUpKrispy = async function(page, catchall, fileNameParam) {
 
     if (solved[0].isSolved) break;
   }*/
-  const recaptcha = new NoCaptchaTaskProxyless("d72cfbca58f2aa138bfc1a3821f31823")
-  recaptcha.createTask("6Lc4iwIaAAAAAHpijD7fQ_rJIdWZtvpodAsPt8AA", "https://www.krispykreme.com/account/create-account")
-  .then((taskId) => {
-      console.info(taskId);
-      return taskId
-  }).then((taskId) => {
-      return taskId;
-  }).then((taskId) => {
-      recaptcha.joinTaskResult(taskId)
-          .then((response) => {console.info(response)})
-  })
+  const capmonster = require('capmonster');
+  const captcha = new capmonster('d72cfbca58f2aa138bfc1a3821f31823');
+   
+  // Get current balance
+  captcha.getBalance().then((balance) => {
+      console.log(balance);
+  });
+  // -> { errorId: 0, balance: 69.420 }
+   
+  // Create vanilla task
+  captcha.createTask({
+          type: 'NoCaptchaTaskProxyless',
+          websiteURL: 'https://www.krispykreme.com/account/create-account',
+          websiteKey: '6Lc4iwIaAAAAAHpijD7fQ_rJIdWZtvpodAsPt8AA',
+      })
+      .then((result) => {
+          console.log(result);
+      });
 
   await page.click('#btnSubmit');
   await page.waitFor(5000);
