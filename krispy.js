@@ -66,14 +66,17 @@ let signUpKrispy = async function(page, catchall, fileNameParam) {
     onReCaptchaUpdate (token);
   });
 
+  await page.waitFor(2000);
   await page.click('#btnSubmit');
-  await page.waitFor(5000);
+  await page.waitFor(4000);
 
   //
   let isSuccess = await page.evaluate(() => {
     return document.querySelector('#ctl00_lnkOrderNowDesktop') != undefined;
   });
   console.log(isSuccess);
+
+  await page.waitFor(400000);
 
   const fs = require('fs')
   let content = 'fail';
