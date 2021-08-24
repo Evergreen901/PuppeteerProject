@@ -47,19 +47,20 @@ let signUpKrispy = async function(page, catchall, fileNameParam) {
   }*/
   
   const ac = require("@antiadmin/anticaptchaofficial");
-  ac.setAPIKey('0f70f8e2bcfb123f849b7fc84d770327');
+  await ac.setAPIKey('0f70f8e2bcfb123f849b7fc84d770327');
   await ac.getBalance()
    .then(balance => console.log('my balance is $'+balance))
    .catch(error => console.log('received error '+error));
 
- ac.settings.recaptchaDataSValue = 'set me for google.com domains';
- await ac.solveRecaptchaV2Proxyless('https://www.krispykreme.com/account/create-account', '6Lc4iwIaAAAAAHpijD7fQ_rJIdWZtvpodAsPt8AA')
-     .then(gresponse => {
-         console.log('g-response: '+gresponse);
-         console.log('google cookies:');
-         console.log(ac.getCookies());
-     })
-     .catch(error => console.log('test received error '+error));
+  let token = await ac.solveRecaptchaV2Proxyless('https://www.krispykreme.com/account/create-account', '6Lc4iwIaAAAAAHpijD7fQ_rJIdWZtvpodAsPt8AA');
+  if (!token) {
+     console.log('something went wrong');
+     return;
+  }
+
+  await tab.$eval('#g-recaptcha-response', (element, token) => {
+      element.value = token;
+  }, token);
 
   await page.click('#btnSubmit');
   await page.waitFor(5000);
