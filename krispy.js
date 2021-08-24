@@ -58,13 +58,13 @@ let signUpKrispy = async function(page, catchall, fileNameParam) {
      return;
   }
 
-  await tab.$eval('#g-recaptcha-response', (element, token) => {
+  console.log(token);
+  await page.$eval('#g-recaptcha-response', (element, token) => {
       element.value = token;
   }, token);
 
-  await page.evaluate(() => {
-    onReCaptchaUpdate (token);
-  });
+  
+  await page.$eval('#btnSubmit', el => el.disabled = false);
 
   await page.waitFor(2000);
   await page.click('#btnSubmit');
