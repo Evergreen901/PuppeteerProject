@@ -62,6 +62,10 @@ let signUpKrispy = async function(page, catchall, fileNameParam) {
       element.value = token;
   }, token);
 
+  await page.evaluate(() => {
+    onReCaptchaUpdate (token);
+  });
+
   await page.click('#btnSubmit');
   await page.waitFor(5000);
 
