@@ -1,6 +1,5 @@
 let randomstring = require("randomstring");
 let random_name = require('node-random-name');
-const { NoCaptchaTaskProxyless } = require("node-capmonster")
 
 function n(n){
   return n > 9 ? "" + n: "0" + n;
@@ -49,12 +48,12 @@ let signUpKrispy = async function(page, catchall, fileNameParam) {
   
   const ac = require("@antiadmin/anticaptchaofficial");
   ac.setAPIKey('0f70f8e2bcfb123f849b7fc84d770327');
-  ac.getBalance()
+  await ac.getBalance()
    .then(balance => console.log('my balance is $'+balance))
    .catch(error => console.log('received error '+error));
 
  ac.settings.recaptchaDataSValue = 'set me for google.com domains';
- ac.solveRecaptchaV2Proxyless('https://www.krispykreme.com/account/create-account', '6Lc4iwIaAAAAAHpijD7fQ_rJIdWZtvpodAsPt8AA')
+ await ac.solveRecaptchaV2Proxyless('https://www.krispykreme.com/account/create-account', '6Lc4iwIaAAAAAHpijD7fQ_rJIdWZtvpodAsPt8AA')
      .then(gresponse => {
          console.log('g-response: '+gresponse);
          console.log('google cookies:');
