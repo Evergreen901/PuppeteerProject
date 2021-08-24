@@ -46,24 +46,21 @@ let signUpKrispy = async function(page, catchall, fileNameParam) {
 
     if (solved[0].isSolved) break;
   }*/
-  const capmonster = require('capmonster');
-  const captcha = new capmonster('d72cfbca58f2aa138bfc1a3821f31823');
-   
-  // Get current balance
-  captcha.getBalance().then((balance) => {
-      console.log(balance);
-  });
-  // -> { errorId: 0, balance: 69.420 }
-   
-  // Create vanilla task
-  captcha.createTask({
-          type: 'NoCaptchaTaskProxyless',
-          websiteURL: 'https://www.krispykreme.com/account/create-account',
-          websiteKey: '6Lc4iwIaAAAAAHpijD7fQ_rJIdWZtvpodAsPt8AA',
-      })
-      .then((result) => {
-          console.log(result);
-      });
+  
+  const ac = require("@antiadmin/anticaptchaofficial");
+  ac.setAPIKey('0f70f8e2bcfb123f849b7fc84d770327');
+  ac.getBalance()
+   .then(balance => console.log('my balance is $'+balance))
+   .catch(error => console.log('received error '+error));
+
+ ac.settings.recaptchaDataSValue = 'set me for google.com domains';
+ ac.solveRecaptchaV2Proxyless('https://www.krispykreme.com/account/create-account', '6Lc4iwIaAAAAAHpijD7fQ_rJIdWZtvpodAsPt8AA')
+     .then(gresponse => {
+         console.log('g-response: '+gresponse);
+         console.log('google cookies:');
+         console.log(ac.getCookies());
+     })
+     .catch(error => console.log('test received error '+error));
 
   await page.click('#btnSubmit');
   await page.waitFor(5000);

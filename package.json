@@ -8,6 +8,7 @@
     "test": "node index.js"
   },
   "dependencies": {
+    "@antiadmin/anticaptchaofficial": "^1.0.14",
     "dotenv": "^10.0.0",
     "mongodb": "^4.1.0",
     "node-random-name": "^1.0.1",
